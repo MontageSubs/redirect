@@ -49,6 +49,22 @@ export const api = {
   health() {
     return request('GET', '/health')
   },
+
+  getAnalytics() {
+    return request('GET', '/analytics')
+  },
+
+  listTokens() {
+    return request('GET', '/tokens')
+  },
+
+  createToken(payload) {
+    return request('POST', '/tokens', payload)
+  },
+
+  deleteToken(id) {
+    return request('DELETE', `/tokens/${id}`)
+  },
 }
 
 export function saveToken(token) {

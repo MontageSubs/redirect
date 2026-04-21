@@ -184,6 +184,11 @@ async function doSave() {
     : null
 
   try {
+    if (types.length === 0) {
+      showSaveSuccess()
+      return
+    }
+
     await api.createLink({
       url: state.preview.original_url,
       custom_slug: state.customSlug || undefined,
@@ -266,8 +271,28 @@ async function init() {
     state.customSlug = e.target.value.trim()
   })
 
-  qs('#save-short-check')?.addEventListener('change', e => { state.saveTypes.short = e.target.checked })
-  qs('#save-custom-check')?.addEventListener('change', e => { state.saveTypes.custom = e.target.checked })
+  function updateSaveBtnState() {
+    const btn = qs('#save-btn')
+    if (!btn) return
+    if (!state.saveTypes.short && !state.saveTypes.custom) {
+      btn.disabled = true
+      btn.style.opacity = '0.5'
+      btn.textContent = t('save.button.none') || 'No link type selected'
+    } else {
+      btn.disabled = false
+      btn.style.opacity = '1'
+      btn.textContent = t('save.button') || 'Save Selected Links'
+    }
+  }
+
+  qs('#save-short-check')?.addEventListener('change', e => { 
+    state.saveTypes.short = e.target.checked
+    updateSaveBtnState()
+  })
+  qs('#save-custom-check')?.addEventListener('change', e => { 
+    state.saveTypes.custom = e.target.checked
+    updateSaveBtnState()
+  })
 
   setupCopyBtn('copy-short-btn', 'result-short-url')
   setupCopyBtn('copy-param-btn', 'result-param-url')
