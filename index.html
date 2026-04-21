@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="MontagesSubs organization link shortener — create, manage, and track short links." />
+  <meta name="base-url" content="/redirect" />
+  <title>Go-To — Link Shortener</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav role="navigation" aria-label="Main navigation">
+  <a class="nav-brand" href="index.html" aria-label="Go-To Home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+    </svg>
+    Go-To
+  </a>
+  <div class="nav-actions">
+    <button id="lang-toggle" class="btn-icon" aria-label="Switch language">中文</button>
+    <button id="theme-toggle" class="btn-icon" aria-label="Toggle theme">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+    <a href="dashboard.html" class="btn-ghost" data-i18n="nav.dashboard"></a>
+    <button id="nav-login" class="btn-primary" data-i18n="auth.github"></button>
+    <div id="nav-user" class="nav-user hidden">
+      <img id="nav-avatar" class="nav-avatar" src="" alt="Avatar" width="28" height="28" />
+      <span id="nav-username" class="nav-username"></span>
+      <button id="nav-logout" class="btn-ghost" data-i18n="nav.logout"></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <h1 data-i18n="hero.title"></h1>
+    <p data-i18n="hero.subtitle"></p>
+  </section>
+
+  <div class="input-wrap" role="search">
+    <input
+      id="url-input"
+      type="url"
+      autocomplete="off"
+      spellcheck="false"
+      data-i18n="input.placeholder"
+      aria-label="Enter a URL to shorten"
+    />
+    <button id="paste-btn" type="button" data-i18n="input.paste" aria-label="Paste from clipboard"></button>
+  </div>
+  <div id="input-status" role="alert" aria-live="polite"></div>
+
+  <section id="results-section" class="results-section hidden" aria-label="Link results">
+
+    <div class="result-card">
+      <label>
+        <span data-i18n="result.short"></span>
+        <span id="result-exists-badge" class="exists-badge hidden" data-i18n="result.exists"></span>
+      </label>
+      <div class="url-copy-row">
+        <input id="result-short-url" class="url-display" type="text" readonly aria-label="Short URL" />
+        <button id="copy-short-btn" class="copy-btn" data-i18n="result.copy"></button>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <label><span data-i18n="result.param"></span></label>
+      <div class="url-copy-row">
+        <input id="result-param-url" class="url-display" type="text" readonly aria-label="Param URL" />
+        <button id="copy-param-btn" class="copy-btn" data-i18n="result.copy"></button>
+      </div>
+    </div>
+
+    <div class="result-card">
+      <label><span data-i18n="result.custom"></span></label>
+      <div class="custom-input-row">
+        <span class="custom-prefix">go-to.workers.dev/c/</span>
+        <input
+          id="custom-slug-input"
+          type="text"
+          maxlength="64"
+          data-i18n="result.custom.placeholder"
+          aria-label="Custom slug"
+        />
+      </div>
+    </div>
+
+    <div class="save-section">
+      <div class="save-checkboxes" role="group" aria-label="Select link types to save">
+        <label class="save-check-item">
+          <input id="save-short-check" type="checkbox" checked aria-label="Save short link" />
+          <span data-i18n="result.short"></span>
+        </label>
+        <label class="save-check-item">
+          <input id="save-custom-check" type="checkbox" aria-label="Save custom link" />
+          <span data-i18n="result.custom"></span>
+        </label>
+      </div>
+
+      <div class="expiry-section">
+        <div class="expiry-label" data-i18n="expiry.label"></div>
+        <div id="expiry-options" role="radiogroup" aria-label="Expiry options"></div>
+      </div>
+
+      <button id="save-btn" class="btn-primary" data-i18n="save.button"></button>
+    </div>
+
+  </section>
+</main>
+
+<div id="login-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <h2 id="modal-title" data-i18n="modal.login.title"></h2>
+    <p data-i18n="modal.login.desc"></p>
+    <div class="modal-actions">
+      <button id="modal-cancel-btn" class="btn-ghost" data-i18n="modal.login.cancel"></button>
+      <button id="modal-login-btn" class="btn-primary" data-i18n="auth.github"></button>
+    </div>
+  </div>
+</div>
+
+<div id="error-banner" class="banner banner-error hidden" role="alert" aria-live="assertive"></div>
+<div id="success-banner" class="banner banner-success hidden" role="status" aria-live="polite"></div>
+
+<footer>
+  <p><span data-i18n="footer.org"></span> · <span data-i18n="footer.powered"></span></p>
+</footer>
+
+<script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
