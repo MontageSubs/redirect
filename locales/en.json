@@ -39,6 +39,7 @@
 
   "save.button": "Save Link",
   "save.button.saving": "Saving...",
+  "save.button.none": "Select a type to save",
   "save.select": "Select which links to save",
   "save.success": "Link saved!",
   "save.error.auth": "Please log in to save links",

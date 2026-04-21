@@ -39,6 +39,7 @@
 
   "save.button": "保存链接",
   "save.button.saving": "保存中...",
+  "save.button.none": "请选择要保存的类型",
   "save.select": "选择要保存的链接类型",
   "save.success": "链接已保存！",
   "save.error.auth": "请登录后再保存链接",
