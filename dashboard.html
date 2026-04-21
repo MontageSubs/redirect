@@ -8,13 +8,12 @@
   <title>Dashboard — Go-To</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
 <nav role="navigation" aria-label="Main navigation">
-  <a class="nav-brand" href="index.html" aria-label="Go-To Home">
+  <a class="nav-brand" href="./" aria-label="Go-To Home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -27,9 +26,10 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
         <circle cx="12" cy="12" r="5"/>
         <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
       </svg>
     </button>
-    <a href="index.html" class="btn-ghost" data-i18n="nav.home"></a>
+    <a href="./" class="btn-ghost" data-i18n="nav.home"></a>
     <div id="nav-user" class="nav-user">
       <img id="nav-avatar" class="nav-avatar" src="" alt="Avatar" width="28" height="28" />
       <span id="nav-username" class="nav-username"></span>
@@ -84,12 +84,48 @@
 
     <section id="panel-stats" class="dash-panel" aria-label="Statistics">
       <h1 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem" data-i18n="dashboard.stats"></h1>
-      <p style="color:var(--text-3);font-size:.9rem">Statistics dashboard — coming in Phase 3.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:1rem;margin-bottom:2rem">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+          <p style="font-size:0.8rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Total Clicks</p>
+          <div id="stat-total" style="font-size:2rem;font-weight:800;color:var(--accent-2)">--</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem">
+          <p style="font-size:0.8rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem">Today Clicks (24h)</p>
+          <div id="stat-today" style="font-size:2rem;font-weight:800;color:var(--success)">--</div>
+        </div>
+      </div>
+      <p style="color:var(--text-3);font-size:.9rem" data-i18n="dashboard.empty">Advanced demographics caching/trending chart is coming in Phase 4.</p>
     </section>
 
     <section id="panel-tokens" class="dash-panel" aria-label="API Tokens">
       <h1 style="font-size:1.4rem;font-weight:700;margin-bottom:1.5rem" data-i18n="dashboard.tokens"></h1>
-      <p style="color:var(--text-3);font-size:.9rem">Token management — coming in Phase 3.</p>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:2rem">
+        <h3 style="font-size:1rem;margin-bottom:1rem;color:var(--text)" data-i18n="token.create"></h3>
+        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+          <input id="new-token-name" type="text" style="background:var(--surface-2);border:1px solid var(--border);color:var(--text);padding:0.6rem 1rem;border-radius:8px;outline:none" placeholder="Token Name (e.g. CLI Script)" />
+          <button id="create-token-btn" class="btn-primary" data-i18n="token.create"></button>
+        </div>
+        <div id="new-token-result" class="hidden" style="margin-top:1rem;padding:1rem;background:rgba(16,185,129,0.1);border:1px solid var(--success);border-radius:8px">
+          <p style="font-size:0.85rem;color:var(--success);margin-bottom:0.5rem" data-i18n="token.created"></p>
+          <div style="display:flex;gap:0.5rem">
+            <input id="new-token-value" type="text" readonly style="flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:0.5rem;font-family:monospace;border-radius:6px" />
+            <button class="btn-ghost" onclick="copyLink(document.getElementById('new-token-value').value)" data-i18n="action.copy"></button>
+          </div>
+        </div>
+      </div>
+      
+      <div style="overflow-x:auto">
+        <table class="links-table">
+          <thead>
+            <tr>
+              <th data-i18n="token.name"></th>
+              <th data-i18n="dashboard.col.created"></th>
+              <th data-i18n="dashboard.col.actions"></th>
+            </tr>
+          </thead>
+          <tbody id="tokens-tbody"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="panel-admin" class="dash-panel" aria-label="Admin Panel">
@@ -113,7 +149,7 @@ function qs(s) { return document.querySelector(s) }
 
 function updateNavUser() {
   const user = getUser()
-  if (!user) { window.location.href = 'index.html'; return }
+  if (!user) { window.location.href = './'; return }
   const avatar = qs('#nav-avatar')
   const username = qs('#nav-username')
   if (avatar) avatar.src = user.avatar
@@ -178,8 +214,8 @@ async function loadLinks(page = 1) {
     data.links.forEach(link => {
       const tr = document.createElement('tr')
       const slugUrl = link.type === 'SHORT'
-        ? `https://go-to.workers.dev/s/${link.slug}`
-        : `https://go-to.workers.dev/c/${link.slug}`
+        ? `https://link.go-to.workers.dev/s/${link.slug}`
+        : `https://link.go-to.workers.dev/c/${link.slug}`
       tr.innerHTML = `
         <td><a href="${slugUrl}" target="_blank" rel="noopener" style="font-family:monospace;color:var(--accent-2)">${link.slug}</a></td>
         <td title="${link.original_url}" style="max-width:180px;overflow:hidden;text-overflow:ellipsis">${link.original_url}</td>
@@ -210,14 +246,63 @@ window.deleteLink = async (slug) => {
   } catch {}
 }
 
+async function loadTokens() {
+  const tbody = qs('#tokens-tbody')
+  try {
+    const data = await api.listTokens()
+    tbody.innerHTML = ''
+    data.tokens.forEach(t => {
+      const tr = document.createElement('tr')
+      tr.innerHTML = `
+        <td style="font-weight:500">${t.name}</td>
+        <td>${formatDate(t.created_at)}</td>
+        <td><button class="action-btn danger" onclick="deleteToken('${t.id}')">${t('action.delete') || 'Delete'}</button></td>
+      `
+      tbody.appendChild(tr)
+    })
+  } catch {}
+}
+
+window.deleteToken = async (id) => {
+  if (!confirm('Delete this token? Any scripts using it will break.')) return
+  try {
+    await api.deleteToken(id)
+    loadTokens()
+  } catch {}
+}
+
+async function setupTokenEvents() {
+  qs('#create-token-btn')?.addEventListener('click', async () => {
+    const name = qs('#new-token-name').value
+    try {
+      const res = await api.createToken({ name })
+      qs('#new-token-result').classList.remove('hidden')
+      qs('#new-token-value').value = res.token
+      qs('#new-token-name').value = ''
+      loadTokens()
+    } catch {}
+  })
+}
+
+async function loadStats() {
+  try {
+    const data = await api.getAnalytics()
+    qs('#stat-total').textContent = data.totalClicks.toLocaleString()
+    qs('#stat-today').textContent = data.todayClicks.toLocaleString()
+  } catch {}
+}
+
 async function init() {
   await initI18n()
   setupTheme()
   setupLang()
   updateNavUser()
   setupTabs()
-  qs('#nav-logout')?.addEventListener('click', () => { clearToken(); window.location.href = 'index.html' })
+  setupTokenEvents()
+  qs('#nav-logout')?.addEventListener('click', () => { clearToken(); window.location.href = './' })
   await loadLinks(1)
+  await loadTokens()
+  await loadStats()
 }
 
 init()

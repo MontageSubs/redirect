@@ -8,13 +8,12 @@
   <title>Go-To — Link Shortener</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
 
 <nav role="navigation" aria-label="Main navigation">
-  <a class="nav-brand" href="index.html" aria-label="Go-To Home">
+  <a class="nav-brand" href="./" aria-label="Go-To Home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
       <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
@@ -75,14 +74,6 @@
     </div>
 
     <div class="result-card">
-      <label><span data-i18n="result.param"></span></label>
-      <div class="url-copy-row">
-        <input id="result-param-url" class="url-display" type="text" readonly aria-label="Param URL" />
-        <button id="copy-param-btn" class="copy-btn" data-i18n="result.copy"></button>
-      </div>
-    </div>
-
-    <div class="result-card">
       <label><span data-i18n="result.custom"></span></label>
       <div class="custom-input-row">
         <span class="custom-prefix">go-to.workers.dev/c/</span>
@@ -93,6 +84,14 @@
           data-i18n="result.custom.placeholder"
           aria-label="Custom slug"
         />
+      </div>
+    </div>
+
+    <div class="result-card" style="border-style: dashed; background: rgba(139, 92, 246, 0.05);">
+      <label><span data-i18n="result.param"></span> <span class="exists-badge" style="margin-left:auto;opacity:0.8">Direct / No save needed</span></label>
+      <div class="url-copy-row">
+        <input id="result-param-url" class="url-display" type="text" readonly aria-label="Param URL" />
+        <button id="copy-param-btn" class="copy-btn" data-i18n="result.copy"></button>
       </div>
     </div>
 
