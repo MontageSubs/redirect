@@ -1,7 +1,7 @@
 import { initI18n, t, setLang, getLang } from './i18n.js'
 import { api, saveToken, clearToken, getUser } from './api.js'
 
-const GITHUB_CLIENT_ID = 'REPLACE_WITH_CLIENT_ID'
+const GITHUB_CLIENT_ID = 'Ov23liRFYNPe5rCXRKLX'
 const GITHUB_REDIRECT_URI = 'https://subs.js.org/redirect'
 const GITHUB_SCOPE = 'read:org'
 
