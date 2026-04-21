@@ -46,6 +46,10 @@ export const api = {
     return request('PATCH', `/links/${slug}`, payload)
   },
 
+  patchLink(slug, payload) {
+    return request('PATCH', `/links/${slug}`, payload)
+  },
+
   health() {
     return request('GET', '/health')
   },
@@ -64,6 +68,14 @@ export const api = {
 
   deleteToken(id) {
     return request('DELETE', `/tokens/${id}`)
+  },
+
+  listAdminUsers() {
+    return request('GET', '/admin/users')
+  },
+
+  patchAdminUserRole(id, role) {
+    return request('PATCH', `/admin/users/${id}/role`, { role })
   },
 }
 
