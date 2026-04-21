@@ -1,4 +1,4 @@
-const BASE = 'https://go-to.workers.dev/api/v1'
+const BASE = 'https://link.go-to.workers.dev/api/v1'
 
 function getToken() {
   return localStorage.getItem('goto_token')
