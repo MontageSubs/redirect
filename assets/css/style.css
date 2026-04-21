@@ -35,7 +35,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -279,7 +279,7 @@ main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;
   color: var(--text-2);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -317,7 +317,7 @@ main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
   padding: 0.5rem 0.6rem 0.5rem 0.75rem;
   font-size: 0.85rem;
   color: var(--text-3);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   user-select: none;
   border-right: 1px solid var(--border);
 }
@@ -330,7 +330,7 @@ main { max-width: 680px; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;
   color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 .save-section {
