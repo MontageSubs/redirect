@@ -194,6 +194,7 @@
 <script type="module">
 import { initI18n, t, setLang, getLang } from './assets/js/i18n.js'
 import { api, clearToken, getUser } from './assets/js/api.js'
+import { STORAGE_KEYS } from './assets/js/storage.js'
 
 let currentPage = 1
 
@@ -211,12 +212,12 @@ function updateNavUser() {
 
 function setupTheme() {
   const btn = qs('#theme-toggle')
-  const saved = localStorage.getItem('goto_theme') ?? 'dark'
+  const saved = localStorage.getItem(STORAGE_KEYS.theme) ?? 'dark'
   document.documentElement.setAttribute('data-theme', saved)
   btn?.addEventListener('click', () => {
     const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('goto_theme', next)
+    localStorage.setItem(STORAGE_KEYS.theme, next)
   })
 }
 
