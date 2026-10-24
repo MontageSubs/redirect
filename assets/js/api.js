@@ -1,7 +1,9 @@
+import { STORAGE_KEYS } from './storage.js'
+
 const BASE = 'https://link.go-to.workers.dev/api/v1'
 
 function getToken() {
-  return localStorage.getItem('goto_token')
+  return localStorage.getItem(STORAGE_KEYS.token)
 }
 
 function authHeaders() {
@@ -80,11 +82,11 @@ export const api = {
 }
 
 export function saveToken(token) {
-  localStorage.setItem('goto_token', token)
+  localStorage.setItem(STORAGE_KEYS.token, token)
 }
 
 export function clearToken() {
-  localStorage.removeItem('goto_token')
+  localStorage.removeItem(STORAGE_KEYS.token)
 }
 
 export function getUser() {

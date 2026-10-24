@@ -1,3 +1,5 @@
+import { STORAGE_KEYS } from './storage.js'
+
 const SUPPORTED = ['en', 'zh']
 const FALLBACK = 'en'
 
@@ -12,7 +14,7 @@ async function loadLocale(lang) {
 }
 
 export async function initI18n() {
-  const saved = localStorage.getItem('goto_lang')
+  const saved = localStorage.getItem(STORAGE_KEYS.lang)
   const browser = navigator.language?.slice(0, 2).toLowerCase()
   _lang = SUPPORTED.includes(saved) ? saved : SUPPORTED.includes(browser) ? browser : FALLBACK
 
@@ -40,7 +42,7 @@ export function getLang() {
 export async function setLang(lang) {
   if (!SUPPORTED.includes(lang)) return
   _lang = lang
-  localStorage.setItem('goto_lang', lang)
+  localStorage.setItem(STORAGE_KEYS.lang, lang)
   _strings = await loadLocale(lang)
   document.documentElement.lang = lang
   applyAll()

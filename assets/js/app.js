@@ -1,5 +1,6 @@
 import { initI18n, t, setLang, getLang } from './i18n.js'
 import { api, saveToken, clearToken, getUser } from './api.js'
+import { STORAGE_KEYS } from './storage.js'
 
 const GITHUB_CLIENT_ID = 'Ov23liRFYNPe5rCXRKLX'
 const GITHUB_REDIRECT_URI = 'https://subs.js.org/redirect'
@@ -51,7 +52,7 @@ function updateNavUser() {
 
 function startGitHubLogin() {
   const stateVal = crypto.randomUUID()
-  sessionStorage.setItem('oauth_state', stateVal)
+  sessionStorage.setItem(STORAGE_KEYS.oauthState, stateVal)
   const params = new URLSearchParams({
     client_id: GITHUB_CLIENT_ID,
     redirect_uri: GITHUB_REDIRECT_URI,
@@ -65,13 +66,13 @@ async function handleOAuthCallback() {
   const params = new URLSearchParams(window.location.search)
   const code = params.get('code')
   const returnedState = params.get('state')
-  const storedState = sessionStorage.getItem('oauth_state')
+  const storedState = sessionStorage.getItem(STORAGE_KEYS.oauthState)
   if (!code) return
   if (returnedState !== storedState) {
     showError(t('auth.error.generic'))
     return
   }
-  sessionStorage.removeItem('oauth_state')
+  sessionStorage.removeItem(STORAGE_KEYS.oauthState)
   history.replaceState({}, '', window.location.pathname)
   try {
     showLoginLoading(true)
@@ -216,13 +217,13 @@ function showSaveSuccess() {
 function setupThemeToggle() {
   const btn = qs('#theme-toggle')
   if (!btn) return
-  const saved = localStorage.getItem('goto_theme') ?? 'dark'
+  const saved = localStorage.getItem(STORAGE_KEYS.theme) ?? 'dark'
   document.documentElement.setAttribute('data-theme', saved)
   btn.addEventListener('click', () => {
     const current = document.documentElement.getAttribute('data-theme')
     const next = current === 'dark' ? 'light' : 'dark'
     document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('goto_theme', next)
+    localStorage.setItem(STORAGE_KEYS.theme, next)
   })
 }
 
